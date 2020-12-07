@@ -1,14 +1,13 @@
 <%= form_with(model: friend, local: true) do |form| %>
   <% if friend.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(friend.errors.count, "error") %> prohibited this friend from being saved:</h2>
-
-      <ul>
-        <% friend.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+    <% friend.errors.full_messages.each do |message| %>
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <%= message %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    <% end %>
   <% end %>
 
   <div class="field form-group">
@@ -30,6 +29,11 @@
   <div class="field form-group">
     <%= form.text_field :twitter, class:"form-control", placeholder:"Twitter" %>
   </div>
+
+  <div class="field form-group">
+    <%= form.number_field :user_id, id: :friend_user_id, class:"form-control", value:current_user.id, type: :hidden %>
+  </div>
+
   <br/>
   <div class="actions">
     <%= form.submit class:"btn btn-secondary" %>
